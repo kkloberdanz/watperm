@@ -1,5 +1,5 @@
 CC=cc
-OPT=-O2
+OPT=-Os
 STD=-std=c89
 LDFLAGS=
 WARNING=-Werror -Wall -Wextra -Wpedantic -Wfloat-equal -Wundef -Wshadow \
@@ -12,6 +12,17 @@ CFLAGS=$(WARNING) $(STD) $(OPT) $(FLAGS)
 
 watperm: main.c
 	$(CC) -o watperm main.c $(CFLAGS) $(LDFLAGS)
+
+.PHONY: release
+release: watperm
+
+.PHONY: debug
+debug: OPT=-O0 -ggdb3
+debug: watperm
+
+.PHONY: static
+static: OPT=-Os -static
+static: watperm
 
 .PHONY: clean
 clean:
