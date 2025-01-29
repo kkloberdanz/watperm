@@ -20,18 +20,19 @@ static void print_usage(void) {
         "  -h, --help Display this message.\n"
         "\n"
         "Example:\n"
-        "  $ watperm -r-xr-xrw- -rwxrwxrwx drwxr-xr-x\n"
-        "  556\n"
-        "  777\n"
-        "  755\n"
+        "$ watperm -r-xr-xrw- -rwxrwxrwx drwxr-xr-x\n"
+        "-r-xr-xrw-    556\n"
+        "-rwxrwxrwx    777\n"
+        "drwxr-xr-x    755\n"
     );
 }
 
 static int get_perm(const char *perm_string) {
     int permissions = 0;
     int i;
+    size_t len = strlen(perm_string);
 
-    if (strlen(perm_string) != PERM_STRING_LEN) {
+    if ((len != PERM_STRING_LEN) && (len != PERM_STRING_LEN + 1)) {
         return -EINVAL;
     }
 
@@ -68,7 +69,7 @@ int main(int argc, char **argv) {
             fprintf(stderr, "Invalid permission string: %s\n", perm_string);
             exit(EXIT_FAILURE);
         }
-        printf("%s    %o\n", perm_string, permissions);
+        printf("%s\t%o\n", perm_string, permissions);
     }
 
     return 0;
