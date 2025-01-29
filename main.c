@@ -1,9 +1,9 @@
 /* (C) 2025 Kyle Kloberdanz */
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
 
 enum {
     PERM_STRING_LEN = 10
@@ -27,7 +27,7 @@ static void print_usage(void) {
     );
 }
 
-static int get_perm(const char *perm_string) {
+static int get_perm(const char *const perm_string) {
     int permissions = 0;
     int i;
     size_t len = strlen(perm_string);
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     }
 
     for (i = 1; i < argc; i++) {
-        const char *perm_string = argv[i];
+        const char *const perm_string = argv[i];
         permissions = get_perm(perm_string);
         if (permissions < 0) {
             fprintf(stderr, "Invalid permission string: %s\n", perm_string);
