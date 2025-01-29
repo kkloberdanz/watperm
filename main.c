@@ -14,8 +14,10 @@ static const char *const ALL_SETUID_SET = "drwsrwsrws";
 
 static void print_usage(void) {
     printf(
-        "watperm -- Print the octal number for a permission string.\n\n"
-        "Usage: watperm PERMISSION_STRING\n\n"
+        "watperm -- Print the octal number for a permission string.\n"
+        "\n"
+        "Usage: watperm PERMISSION_STRING\n"
+        "\n"
         "Options:\n"
         "  -h, --help Display this message.\n"
         "\n"
