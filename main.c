@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
 enum {
     PERM_STRING_LEN = 10
@@ -28,14 +29,18 @@ static void print_usage(void) {
 static int get_perm(const char *perm_string) {
     int permissions = 0;
     int i;
+
+    if (strlen(perm_string) != PERM_STRING_LEN) {
+        return -EINVAL;
+    }
+
     for (i = 1; i < PERM_STRING_LEN; i++) {
         if (perm_string[i] == '-') {
             ;
         } else if (perm_string[i] == ALL_PERMS_SET[i]) {
             permissions |= 1 << (PERM_STRING_LEN - 1 - i);
         } else {
-            fprintf(stderr, "Invalid permission string: %s\n", perm_string);
-            exit(1);
+            return -EINVAL;
         }
     }
     return permissions;
@@ -48,17 +53,17 @@ int main(int argc, char **argv) {
     if (argc >= 2) {
         if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")) {
             print_usage();
-            return 0;
+            exit(EXIT_SUCCESS);
         }
     }
 
     for (i = 1; i < argc; i++) {
         const char *perm_string = argv[i];
-        if (strlen(perm_string) != PERM_STRING_LEN) {
-            fprintf(stderr, "Invalid permission string: %s\n", perm_string);
-            return 1;
-        }
         permissions = get_perm(perm_string);
+        if (permissions < 0) {
+            fprintf(stderr, "Invalid permission string: %s\n", perm_string);
+            exit(EXIT_FAILURE);
+        }
         printf("%s    %o\n", perm_string, permissions);
     }
 
