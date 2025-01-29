@@ -1,11 +1,14 @@
 /* (C) 2025 Kyle Kloberdanz */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 enum {
     PERM_STRING_LEN = 10
 };
+
+static const char *const ALL_PERMS_SET = "drwxrwxrwx";
 
 static void print_usage(void) {
     printf(
@@ -26,8 +29,13 @@ static int get_perm(const char *perm_string) {
     int permissions = 0;
     int i;
     for (i = 1; i < PERM_STRING_LEN; i++) {
-        if (perm_string[i] != '-') {
-            permissions |= 1 << (PERM_STRING_LEN - i - 1);
+        if (perm_string[i] == '-') {
+            ;
+        } else if (perm_string[i] == ALL_PERMS_SET[i]) {
+            permissions |= 1 << (PERM_STRING_LEN - 1 - i);
+        } else {
+            fprintf(stderr, "Invalid permission string: %s\n", perm_string);
+            exit(1);
         }
     }
     return permissions;
@@ -51,7 +59,7 @@ int main(int argc, char **argv) {
             return 1;
         }
         permissions = get_perm(perm_string);
-        printf("%o\n", permissions);
+        printf("%s    %o\n", perm_string, permissions);
     }
 
     return 0;
