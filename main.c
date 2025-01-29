@@ -9,8 +9,6 @@ enum {
     PERM_STRING_LEN = 10
 };
 
-static const char *const ALL_PERMS_SET = "drwxrwxrwx";
-
 static void print_usage(void) {
     printf(
         "watperm -- Print the octal number for a permission string.\n\n"
@@ -29,19 +27,22 @@ static void print_usage(void) {
 static int get_perm(const char *perm_string) {
     int permissions = 0;
     int i;
+    const char *const perms = "rwx";
+    unsigned int perms_idx = 0;
 
     if (strlen(perm_string) != PERM_STRING_LEN) {
         return -EINVAL;
     }
 
     for (i = 1; i < PERM_STRING_LEN; i++) {
-        if (perm_string[i] == '-') {
+        if ((perm_string[i] == 's') || (perm_string[i] == '-')) {
             ;
-        } else if (perm_string[i] == ALL_PERMS_SET[i]) {
+        } else if (perm_string[i] == perms[perms_idx]) {
             permissions |= 1 << (PERM_STRING_LEN - 1 - i);
         } else {
             return -EINVAL;
         }
+        perms_idx = (perms_idx + 1) % 3;
     }
     return permissions;
 }
