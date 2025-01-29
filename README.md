@@ -10,4 +10,9 @@ make
 
 # Usage
 
-watperm -r-xr-xrw- -rwxrwxrwx drwxr-xr-x
+```sh
+$ watperm -r-xr-xrw- -rwxrwxrwx drwxr-xr-x
+556
+777
+755
+```
