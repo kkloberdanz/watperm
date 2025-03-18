@@ -12,7 +12,7 @@ make
 
 ```sh
 $ watperm -r-xr-xrw- -rwxrwxrwx drwxr-xr-x
-556
-777
-755
+-r-xr-xrw-	556
+-rwxrwxrwx	777
+drwxr-xr-x	755
 ```
