@@ -16,7 +16,7 @@ static void print_usage(void) {
     printf(
         "watperm -- Print the octal number for a permission string.\n"
         "\n"
-        "Usage: watperm PERMISSION_STRING\n"
+        "Usage: watperm [OPTIONS] PERMISSION_STRING\n"
         "\n"
         "Options:\n"
         "  -h, --help Display this message.\n"
