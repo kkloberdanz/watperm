@@ -66,12 +66,27 @@ int main(int argc, char **argv) {
 
     for (i = 1; i < argc; i++) {
         const char *const perm_string = argv[i];
+        const char *kind = "UNKOWN";
+
         permissions = get_perm(perm_string);
         if (permissions < 0) {
             fprintf(stderr, "Invalid permission string: %s\n", perm_string);
             exit(EXIT_FAILURE);
         }
-        printf("%s\t%o\n", perm_string, permissions);
+
+        switch (perm_string[0]) {
+        case '-':
+            kind = "file";
+            break;
+        case 'd':
+            kind = "directory";
+            break;
+        case 'l':
+            kind = "link";
+            break;
+        }
+
+        printf("%s\t%o\t%s\n", perm_string, permissions, kind);
     }
 
     return 0;
