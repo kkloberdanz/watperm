@@ -23,9 +23,9 @@ static void print_usage(void) {
         "\n"
         "Example:\n"
         "$ watperm -r-xr-xrw- -rwxrwxrwx drwxr-xr-x\n"
-        "-r-xr-xrw-    556\n"
-        "-rwxrwxrwx    777\n"
-        "drwxr-xr-x    755\n"
+        "-r-xr-xrw-\t556\tfile\n"
+        "-rwxrwxrwx\t777\tfile\n"
+        "drwxr-xr-x\t755\tdirectory\n"
     );
 }
 
